@@ -22,7 +22,7 @@ Your screenshot should look something like this: https://i.imgur.com/rKUjR9R.png
 ### Explain what was not right (optional if obvious): 
 
 
-### Reproduction guide (optional if trivial): 
+### Reproduction steps (optional if trivial): 
 
 
 ### Add everything else that you believe to be useful below (optional): 
