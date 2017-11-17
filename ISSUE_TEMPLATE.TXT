@@ -1,7 +1,7 @@
 ### Test link (required): 
 
 
-### Screenshot of the web page (including the address bar and extension icons) (required): 
+### Screenshot of the web page (including address bar and extension icons) (required): 
 <!--
 Your screenshot should look something like this: https://i.imgur.com/nxT9UqA.png
 -->
