@@ -1,0 +1,29 @@
+### Test link (required): 
+
+
+### Screenshot of the web page (including the address bar and extension icons) (required): 
+<!--
+Your screenshot should look something like this: https://i.imgur.com/nxT9UqA.png
+-->
+
+
+### Screenshot of the console (press `F12` to bring up the console) (required): 
+<!--
+Your screenshot should look something like this: https://i.imgur.com/rKUjR9R.png
+-->
+
+
+### Your adblocker (required): 
+
+
+### Your browser (required): 
+
+
+### Explain what was not right (optional if obvious): 
+
+
+### Reproduction guide (optional if trivial): 
+
+
+### Add everything else that you believe to be useful below (optional): 
+
