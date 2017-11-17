@@ -60,7 +60,7 @@ to run before other scripts of your extension.
 var Micro = {};
 /**
  * Whether libmicro is initialized.
- * @var {boolean}
+ * @readonly @var {boolean}
  */
 Micro.initialized = false;
 /**
@@ -72,19 +72,21 @@ Micro.debug = false;
 
 /**
  * The chrome namespace.
- * @const {Namespace}
+ * @private @const {Namespace}
  */
-Micro.chrome = window.chrome;
+Micro.chrome = window.chrome || window.browser;
 /**
- * Configuration and assets.
- * @var {Array.<Micro.Filter>}
- * @var {Array.<Micro.Asset>}
+ * Filters and assets.
+ * @private @var {Array.<Micro.Filter>}
+ * @private @var {Array.<Micro.Scritplet>}
+ * @private @var {Array.<Micro.Asset>}
  */
-Micro.config = [];
+Micro.filter = [];
+Micro.script = [];
 Micro.assets = [];
 /**
  * Tab store.
- * @var {Object.<Object.<string>>}
+ * @private @var {Object.<Object.<string>>}
  */
 Micro.tabs = {};
 
@@ -97,7 +99,7 @@ Micro.init = async () => {
     const chrome = Micro.chrome;
 
     if (Micro.initialized) {
-        Micro.reset();
+        Micro.teardown();
     }
     Micro.initialized = true;
 
@@ -115,7 +117,8 @@ Micro.init = async () => {
             });
         });
 
-        Micro.config = [];
+        Micro.filter = [];
+        Micro.script = [];
         Micro.assets = [];
 
         let invalidConfig = 0;
@@ -124,8 +127,9 @@ Micro.init = async () => {
                 return;
             }
 
+            // TODO Process scriptlet filters
             try {
-                Micro.config.push(new Micro.Filter(line));
+                Micro.filter.push(new Micro.Filter(line));
             } catch (err) {
                 invalidConfig++;
                 if (Micro.debug) {
@@ -216,7 +220,8 @@ Micro.teardown = () => {
     }
     Micro.initialized = false;
 
-    Micro.config = [];
+    Micro.filter = [];
+    Micro.script = [];
     Micro.assets = [];
 
     Micro.tabs = {};
@@ -228,6 +233,7 @@ Micro.teardown = () => {
 };
 /**
  * Set configuration data, will take effect on the next Micro.init().
+ * Configuration data includes network filters and scriptlet filters.
  * @async @function
  * @param {string} config - The configuration data.
  */
@@ -266,7 +272,7 @@ Micro.setAssets = async (assets) => {
 
 /**
  * Committed event handler.
- * @function
+ * @private @function
  * @param {Object} details - The event details.
  */
 Micro.onCommitted = (details) => {
@@ -277,7 +283,7 @@ Micro.onCommitted = (details) => {
 };
 /**
  * Remove event handler
- * @function
+ * @private @function
  * @param {integer} id - The tab that was removed.
  */
 Micro.onRemoved = (id) => {
@@ -285,7 +291,7 @@ Micro.onRemoved = (id) => {
 };
 /**
  * Before request event handler.
- * @function
+ * @private @function
  * @param {Object} details - The event details.
  * @return {Object|undefined} The decision.
  */
@@ -342,7 +348,7 @@ Micro.onBeforeRequest = (details) => {
 
 /**
  * Get the URL of a frame of a tab.
- * @function
+ * @private @function
  * @param {integer} tab - The ID of the tab.
  * @param {integer} frame - The ID of the frame.
  * @return {string} The URL of the tab, or an empty string if it is not known.
@@ -358,7 +364,7 @@ Micro.getTabURL = (tab, frame) => {
 
 /**
  * Filter class.
- * @class
+ * @private @class
  */
 Micro.Filter = class {
     /**
@@ -409,7 +415,7 @@ Micro.Filter = class {
                 const negated = o.startsWith("~");
                 o = o.replace(/^~/, "");
 
-                if (o === "important") {
+                if (o === "libmicro" || o === "important") {
                     return;
                 }
 
@@ -433,6 +439,9 @@ Micro.Filter = class {
                 if (o.startsWith("redirect=")) {
                     this.redirect = o.substring(9);
                     return;
+                }
+                if (o.startsWith("inject=")) {
+                    // TODO
                 }
 
                 if (o.startsWith("domain=")) {
@@ -682,8 +691,15 @@ Micro.Filter = class {
     }
 };
 /**
+ * Scriptlet class.
+ * @private @class
+ */
+Micro.Scritplet = class {
+
+};
+/**
  * Asset class.
- * @class
+ * @private @class
  */
 Micro.Asset = class {
     /**
@@ -702,13 +718,17 @@ Micro.Asset = class {
          */
         this.name = name;
         /**
+         * The raw payload.
+         * @prop
+         * @const {string}
+         */
+        this.raw = payload;
+        /**
          * The processed payload of this asset.
          * @prop
          * @const {string}
          */
-        this.payload = "";
-
-        this.payload += "data:" + type +
+        this.payload = "data:" + type +
             (encode ? "" : ";base64") + "," +
             (encode ? payload : btoa(payload));
     }

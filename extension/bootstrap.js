@@ -8,7 +8,7 @@
         return;
     }
 
-    //Micro.debug = true;
+    Micro.debug = true;
 
     let settings = {};
     loadSetting: {
@@ -26,6 +26,7 @@
             });
         } catch (err) {
             console.error("AdBlock Protector 2 could not to read savedata!");
+            console.error(err);
             return;
         }
     }
@@ -33,17 +34,18 @@
     initMicro: {
         await Micro.init();
 
-        if (Micro.config.length === 0 || settings.config_last_update + 86400000 < Date.now()) {
+        if (settings.config_last_update + 86400000 < Date.now()) {
             let filter;
             try {
                 if (typeof REMOTE_CONFIG !== "string" || REMOTE_CONFIG.length === 0) {
-                    throw new Error("No remote filters");
+                    throw new Error("No remote configuration url");
                 }
 
                 filter = await fetch(REMOTE_CONFIG);
                 filter = filter.text();
             } catch (err) {
                 console.error("AdBlock Protector 2 failed to update configuration!");
+                console.error(err);
 
                 // Quantum will freak out if I request a file that does not exist
                 //try {
@@ -61,12 +63,12 @@
             }
         }
 
-        if (Micro.assets.length === 0 || settings.assets_last_update + 86400000 < Date.now()) {
+        if (settings.assets_last_update + 86400000 < Date.now()) {
             let assets;
 
             try {
                 if (typeof REMOTE_ASSETS !== "string" || REMOTE_ASSETS.length === 0) {
-                    throw new Error("No remote assets");
+                    throw new Error("No remote assets url");
                 }
 
                 // Quantum extension store does not allow remote script
@@ -78,6 +80,7 @@
                 assets = assets.text();
             } catch (err) {
                 console.error("AdBlock Protector 2 failed to update assets!");
+                console.error(err);
 
                 //try {
                 //    assets = await fetch(chrome.runtime.getURL("assets.txt"));
