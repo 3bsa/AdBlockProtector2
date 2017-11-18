@@ -8,7 +8,7 @@
   "background": {
     "persistent": true,
     "scripts": [
-      "libedyfy-init.js",
+      "libedgyfy-init.js",
       "common.js",
       "background/libmicro.js",
       "background/libmicro-bootstrap.js",
