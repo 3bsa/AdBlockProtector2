@@ -1,6 +1,12 @@
 {
+  "applications": {
+    "gecko": {
+      "strict_min_version": "57.0"
+    }
+  },
   "author": "jspenguin2017",
   "background": {
+    "persistent": true,
     "scripts": [
       "common.js",
       "background/libmicro.js",

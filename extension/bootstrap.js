@@ -1,7 +1,7 @@
 "use strict";
 
 (async () => {
-    const chrome = window.chrome || window.browser;
+    const chrome = /edge/.test(navigator.userAgent) ? window.browser : window.browser;
 
     if (!Micro) {
         console.error("AdBlock Protector 2 could not find libmicro!");
