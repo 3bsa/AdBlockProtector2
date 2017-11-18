@@ -1,8 +1,6 @@
 "use strict";
 
 if (/firefox/i.test(navigator.userAgent)) {
-    const chrome = /edge/.test(navigator.userAgent) ? window.browser : window.browser;
-
     chrome.webRequest.onHeadersReceived.addListener((details) => {
         if (!details.responseHeaders) {
             return;

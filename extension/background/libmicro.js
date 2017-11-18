@@ -27,6 +27,7 @@ Chromium 62+
 Chrome   62+
 Opera    48+
 Quantum  57+
+Edge     16+
 
 
 libmicro needs these permissions
@@ -74,7 +75,7 @@ Micro.debug = false;
  * The chrome namespace.
  * @private @const {Namespace}
  */
-Micro.chrome = window.chrome || window.browser;
+Micro.chrome = /edge/i.test(navigator.userAgent) ? window.browser : window.chrome;
 /**
  * Filters and assets.
  * @private @var {Array.<Micro.Filter>}
@@ -127,7 +128,6 @@ Micro.init = async () => {
                 return;
             }
 
-            // TODO Process scriptlet filters
             try {
                 Micro.filter.push(new Micro.Filter(line));
             } catch (err) {
@@ -305,8 +305,9 @@ Micro.onBeforeRequest = (details) => {
         return;
     }
 
-    for (let i = 0; i < Micro.config.length; i++) {
-        const filter = Micro.config[i];
+    // TODO Check scriptlet filters
+    for (let i = 0; i < Micro.filter.length; i++) {
+        const filter = Micro.filter[i];
 
         if (filter.match(requester, details.url, details.type)) {
             let redirect = filter.redirect;
@@ -316,7 +317,6 @@ Micro.onBeforeRequest = (details) => {
                 /firefox/i.test(navigator.userAgent)) {
                 redirect = "libmicro-frame-blocked";
             }
-
 
             if (redirect !== "") {
                 for (let j = 0; j < Micro.assets.length; j++) {
