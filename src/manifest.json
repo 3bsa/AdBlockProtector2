@@ -28,7 +28,7 @@
     {
       "all_frames": true,
       "js": [
-        "libegdyfy-init.js",
+        "libedgyfy-init.js",
         "common.js",
         "content/1-content-domlib.js",
         "content/2-content-core.js",
