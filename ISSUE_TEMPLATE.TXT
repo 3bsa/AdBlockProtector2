@@ -19,6 +19,13 @@ Your screenshot should look something like this: https://i.imgur.com/rKUjR9R.png
 ### Your browser (required): 
 
 
+### Commit hash of AdBlock Protector 2 Extension (required): 
+<!--
+See this post if you are not sure how to obtain the hash: 
+https://stackoverflow.com/questions/1967967/git-command-to-display-head-commit-id
+-->
+
+
 ### Explain what was not right (optional if obvious): 
 
 
