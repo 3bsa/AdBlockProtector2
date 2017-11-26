@@ -1,3 +1,5 @@
+# Contribution Guideline - Developer ALPHA Version
+
 This project is in early development, and many things are very user unfriendly. As we want to be able to focus on
 development, we currently only accept issues from developers.
 
@@ -11,3 +13,5 @@ browser support as it does not work on any browser as of now.
 We are all volunteers doing this for free, this is not a customer service desk.
 
 You may be banned for breaking this contribution guideline.
+
+The contribution guideline will change significantly on every development stage change.
