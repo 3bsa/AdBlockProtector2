@@ -31,7 +31,7 @@ https://stackoverflow.com/questions/1967967/git-command-to-display-head-commit-i
 
 ### [DevALPHA] Explain why is this happening (required): 
 <!--
-Pin point the line of code that is misbehaving
+Pin point the line of code that is misbehaving, show which commit introduced the problem if applicable
 -->
 
 
