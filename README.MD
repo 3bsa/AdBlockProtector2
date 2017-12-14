@@ -1,4 +1,4 @@
-# AdBlock Protector 2 - Developer ALPHA
+# ~~AdBlock Protector 2~~ Canceled in favor of [Nano Adblocker](https://github.com/NanoAdblocker/NanoCore)
 
 An anti-adblock defuser
 
